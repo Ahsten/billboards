@@ -1,17 +1,27 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Video from './components/Video.vue';
+import data from "./assets/data.json";
+import { ref } from 'vue';
+
+interface Year {
+  id: string,
+  link: string
+}
+
+const years = data.years;
+const selected = ref<Year>({"id": "2022", "link": "https://www.youtube.com/embed/Q2VfUqpLYLo?si=ZnaOwZkHS2xXYzRh"});
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <h1>Year: {{ selected?.id }}</h1>
+    <select v-model="selected">
+        <option disabled value="">Please select a year</option>
+        <option v-for="year in years" :key="year.id" :value="year.link">
+            {{ year.id }}
+        </option>
+    </select>
+  <Video :year="selected"/>
 </template>
 
 <style scoped>
